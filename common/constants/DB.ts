@@ -1,1 +1,1 @@
-export const SPORTS = "Sports";
+export const SPORTS = "sports";

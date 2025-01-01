@@ -1,13 +1,15 @@
+import type { Database } from "@/supabase";
 import { createServerClient } from "@supabase/ssr";
-import { SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
-import { Database } from "@/index";
 
 export const createClient = async () => {
 	const cookieStore = await cookies();
 
 	return createServerClient<Database>(
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 		{
 			cookies: {
@@ -16,6 +18,7 @@ export const createClient = async () => {
 				},
 				setAll(cookiesToSet) {
 					try {
+						// biome-ignore lint/complexity/noForEach: <explanation>
 						cookiesToSet.forEach(({ name, value, options }) => {
 							cookieStore.set(name, value, options);
 						});
@@ -42,7 +45,9 @@ export const getDBClient = async () => {
 	if (!supabaseClient) {
 		const cookieStore = await cookies();
 		supabaseClient = createServerClient(
+			// biome-ignore lint/style/noNonNullAssertion: <explanation>
 			process.env.NEXT_PUBLIC_SUPABASE_URL!,
+			// biome-ignore lint/style/noNonNullAssertion: <explanation>
 			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 			{
 				cookies: {
@@ -51,6 +56,7 @@ export const getDBClient = async () => {
 					},
 					setAll(cookiesToSet) {
 						try {
+							// biome-ignore lint/complexity/noForEach: <explanation>
 							cookiesToSet.forEach(({ name, value, options }) =>
 								cookieStore.set(name, value, options),
 							);

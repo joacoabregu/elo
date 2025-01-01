@@ -34,7 +34,132 @@ export type Database = {
 	};
 	public: {
 		Tables: {
-			Sports: {
+			matches: {
+				Row: {
+					created_at: string;
+					id: number;
+					judge: string | null;
+					result: string | null;
+					sport: number | null;
+					status: string;
+					updated_at: string;
+					user_1: string;
+					user_2: string;
+				};
+				Insert: {
+					created_at?: string;
+					id?: number;
+					judge?: string | null;
+					result?: string | null;
+					sport?: number | null;
+					status: string;
+					updated_at?: string;
+					user_1: string;
+					user_2: string;
+				};
+				Update: {
+					created_at?: string;
+					id?: number;
+					judge?: string | null;
+					result?: string | null;
+					sport?: number | null;
+					status?: string;
+					updated_at?: string;
+					user_1?: string;
+					user_2?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "matches_sport_fkey";
+						columns: ["sport"];
+						isOneToOne: false;
+						referencedRelation: "sports";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			scores: {
+				Row: {
+					created_at: string;
+					id: number;
+					score: number;
+					sport: number;
+					user: string;
+				};
+				Insert: {
+					created_at?: string;
+					id?: number;
+					score: number;
+					sport: number;
+					user: string;
+				};
+				Update: {
+					created_at?: string;
+					id?: number;
+					score?: number;
+					sport?: number;
+					user?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "scores_sport_fkey";
+						columns: ["sport"];
+						isOneToOne: false;
+						referencedRelation: "sports";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			scores_logs: {
+				Row: {
+					created_at: string;
+					id: number;
+					match: number;
+					score: number;
+					sport: number;
+					user: string;
+				};
+				Insert: {
+					created_at?: string;
+					id?: number;
+					match: number;
+					score: number;
+					sport: number;
+					user: string;
+				};
+				Update: {
+					created_at?: string;
+					id?: number;
+					match?: number;
+					score?: number;
+					sport?: number;
+					user?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "scores_logs_match_fkey";
+						columns: ["match"];
+						isOneToOne: false;
+						referencedRelation: "matches";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "scores_logs_score_fkey";
+						columns: ["score"];
+						isOneToOne: false;
+						referencedRelation: "scores";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "scores_logs_sport_fkey";
+						columns: ["sport"];
+						isOneToOne: false;
+						referencedRelation: "sports";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			sports: {
 				Row: {
 					created_at: string;
 					id: number;
@@ -51,6 +176,72 @@ export type Database = {
 					name?: string;
 				};
 				Relationships: [];
+			};
+			teams: {
+				Row: {
+					city: string;
+					country: string;
+					created_at: string;
+					id: number;
+					name: string;
+				};
+				Insert: {
+					city: string;
+					country: string;
+					created_at?: string;
+					id?: number;
+					name: string;
+				};
+				Update: {
+					city?: string;
+					country?: string;
+					created_at?: string;
+					id?: number;
+					name?: string;
+				};
+				Relationships: [];
+			};
+			user_sports: {
+				Row: {
+					created_at: string;
+					id: number;
+					sport: number;
+					team: number;
+					updated_at: string;
+					user: string;
+				};
+				Insert: {
+					created_at?: string;
+					id?: number;
+					sport: number;
+					team: number;
+					updated_at: string;
+					user: string;
+				};
+				Update: {
+					created_at?: string;
+					id?: number;
+					sport?: number;
+					team?: number;
+					updated_at?: string;
+					user?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "user_sports_sport_fkey";
+						columns: ["sport"];
+						isOneToOne: false;
+						referencedRelation: "sports";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "user_sports_team_fkey";
+						columns: ["team"];
+						isOneToOne: false;
+						referencedRelation: "teams";
+						referencedColumns: ["id"];
+					},
+				];
 			};
 		};
 		Views: {
